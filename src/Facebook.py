@@ -1,4 +1,4 @@
-def getGenre():
+def getGenre(): 
     return
 
 def getLocation():
