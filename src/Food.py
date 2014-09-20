@@ -1,0 +1,2 @@
+def getRestaurant():
+    return
