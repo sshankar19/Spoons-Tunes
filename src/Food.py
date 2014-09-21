@@ -4,14 +4,16 @@ from pprint import pprint
 from Queue import PriorityQueue, Queue
 
 class Eatery:
-    i = 0;
-    def __init__(self):
-        i = 0;
+    def __init__(self, name):
+        self.name = name;
 
 class Food:
-    i = 0;
-    def __init__(self):
-        i = 0;
+    def __init__(self, addFeePerItem, descrip, ID, name, price):
+        self.addFeePerItem = addFeePerItem;
+        self.descrip = descrip;
+        self.ID = ID;
+        self.name = name;
+        self.price = price
 
 json_data=open('genres2.json')
 
@@ -35,7 +37,7 @@ json_data.close()
 #for e in list:
 #   print e + "\n"    
 
-def order(food, location,city,zipcode, price):
+def order(food, location,city,zipcode):
     ordrin_api = ordrin.APIs('VP0cjZmpyVPNAFJUJkBWDIETChyTTwp7mX3jlPzfn4Q', ordrin.TEST)
     restaurants =  ordrin_api.delivery_list("ASAP", location, city, zipcode)
     
@@ -54,23 +56,27 @@ def order(food, location,city,zipcode, price):
             if cuisines[j] is food:
                 highpriority = True;
          
-        restauPair = {}       
+        restauPair = {}     
+        newRest = Eatery(temp['name'])  
+        foodList = [];
         pprint(temp)
-        menu = temp['menu']
-        menuItems = menu[0]
+        menuItems = (temp['menu'])[0]#go through ALL menu Items
        #pprint(menuItems)
         additionalfee = menuItems['additional_fee']
         children = menuItems['children'] 
         #print(additionalfee)
         #pprint(menu)
-        for child in children: #each individual plate of food
+        for child in children: #each individual plate of food #Go through ALL combinations of individual plate of food
             addFeePerItem = child['additional_fee']
             descrip = child['descrip']
             ID = child['id']
             name = child['name']
             price = child['price']
+            newFood = Food(addFeePerItem, descrip, ID, name, price)
+            foodList.append(newFood)
+            print newFood.ID
             #pprint (child)
-                
+        restauPair[newRest] = foodList        
         if highpriority:
             priority.put(1, temp)
         else:
@@ -87,7 +93,7 @@ def order(food, location,city,zipcode, price):
     
     
 
-def getFood(genre, location,city, zipcode, price):
+def getFood(genre, location,city, zipcode):
     b = list.index("rap")
     print b
     k = value[b];
@@ -124,7 +130,7 @@ def getFood(genre, location,city, zipcode, price):
         print('%s\n\tYelp ID: %s\n\trating: %g (%d reviews)\n\taddress: %s' % (business['name'], business['id'], business['rating'],
                                                                     business['review_count'], ', '.join(business['location']['display_address'])))
    """
-    order(food, location, city, zipcode, price)
+    order(food, location, city, zipcode)
     
 print "here"    
 getFood("rap", "10 7th Avenue", "New York City", "10001", "3.28")
