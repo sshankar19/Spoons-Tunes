@@ -1,9 +1,5 @@
 import Music
-<<<<<<< HEAD
 import sys
-=======
-
->>>>>>> 67314a45f6e9b7088a34131f732499abf17232e6
 import spotipy
 import spotipy.util as util
 import pyechonest
