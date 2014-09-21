@@ -11,21 +11,21 @@ print "    2) Finding the perfect food choice for you to order (cater) Food from
 #print "    3) Tweeting to your friends on twitter and letting them know about your hangout!
 
 location = raw_input("Please enter the address of your event:")
-print location
+#print location
 city = raw_input("Now the city please:")
-print city
+#print city
 state = raw_input("State of residence please!")
-print state
+#print state
 zipcode = raw_input("Please enter the zipcode of your event:")
-print zipcode
+#print zipcode
 username = raw_input("Please enter the username for Spotify:")
-print username
+#print username
 playlist = raw_input("Please enter the Playlist name for this event:")
-print playlist
+#print playlist
 genre = raw_input("What type of music would you want for this event?")
-print genre
+#print genre
 numSongs = raw_input("How many songs do you want for this")
-print numSongs
+#print numSongs
 
 spotLoc = state+" , "+state
 Spotify.make_playlist(username, playlist, genre, spotLoc, numSongs)
