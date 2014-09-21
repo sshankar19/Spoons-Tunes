@@ -7,19 +7,19 @@ class Eatery:
     def __init__(self, name, priority, ID):
         self.name = name;
         self.priority = priority;
-
+        
 class Food:
-    def __init__(self, addFeePerItem, descrip, ID, name, price):
+    def __init__(self, addFeePerItem, descrip, ID, name, price,rid):
         self.addFeePerItem = addFeePerItem;
         self.descrip = descrip;
         self.ID = ID;
         self.name = name;
         self.price = price
+        self.rid = rid;
 
 json_data=open('genres2.json')
 
 data = json.load(json_data)
-#pprint(data)
 genre_data = data['genres']
 list = []
 value = []
@@ -30,35 +30,89 @@ for d in genre_data:
     i+=1
     if(i == 10):
         i = 0
-    
-    #print '\n'
-json_data.close()
- 
 
-#for e in list:
-#   print e + "\n"  
+json_data.close()
+
+
+def printFood(list):
+    for item in list:
+        print "\tName is: "+item.name
+        print "\t\tDescription is: " + item.descrip;
+        print "\t\tPrice is: "+item.price
+
+def selectItem(list):
+    item = raw_input("What would you like to order then?")
+    for choice in list:
+        if item == choice.name:
+            return choice
+        
 
 def suggestionMenu(restDict, restaurant, ordrin):
-    print "The restaurant suggested is: "+ restaurant['name']
     print "Your choices are the following: "
-    list = restDict[restaurant]
-    for food 
-  
+    print "\n"
+    list = restDict[restaurant['name']]
+    print "\n"
+    
+    printFood(list)
+    choice = selectItem(list)
+    totalFood = [];
+    totalFood.append(choice)
+    
+    more = raw_input("Do you want to order another item? Enter yes or no.")
+    while(more == "yes"):
+        choice = selectItem(list)
+        totalFood = [];
+        totalFood.append(choice)
+        more = raw_input("Do you want to order another item? Enter yes or no.")
+    
+    return totalFood
 
+def selectRestaurant(priority):
+    restaurant = priority.get_nowait();
+    print restaurant
+    print "The restaurant suggested is: "+ restaurant['name']
+    return restaurant
+    
 def finalOrder(restDict, priority, ordrin):
-    suggestionMenu(restDict, top = priority.get_nowait(), ordrin)
+    print("Here")
+    restaurant = selectRestaurant(priority)
+    confirmation = raw_input("Do you want to order from here? Enter yes or no.");
+    print("there")
+    if confirmation is "yes":
+        totalFood = suggestionMenu(restDict, restaurant, ordrin)
+    else:
+        while(confirmation != "yes"):
+            restaurant = selectRestaurant(priority)
+            confirmation = raw_input("Do you want to order from here? Enter yes or no.");
+        if confirmation != "yes":
+            print "Sorry we couldn't find a restaurant to your liking. Please try again"
+            return;
+        else:
+            totalFood = suggestionMenu(restDict, restaurant, ordrin)
+    
+    #make tray
+    tray = ""
+    for food in totalFood:
+        tray = food.name+"/1+";
+    tray = tray[:(len(tray)-1)]
+    #pprint (restaurant)
 
+    ordrin.order_guest(totalFood[0].rid, "em@em.com", tray, "5.05", "Example", "User", "2345678901", "77840", "1 Main Street", "College Station", "TX", "4111111111111111", "123", "02/2016", "1 Main Street", "College Station", "TX", "77840", "2345678901",  "", "", "", "ASAP", "ASAP")
+    
+    #time to order the food items
+    
+        
 
 
 def order(food, location,city,zipcode):
     ordrin_api = ordrin.APIs('VP0cjZmpyVPNAFJUJkBWDIETChyTTwp7mX3jlPzfn4Q', ordrin.TEST)
     restaurants =  ordrin_api.delivery_list("ASAP", location, city, zipcode)
     
-    priority = PriorityQueue()
-    
+    priorityQ = PriorityQueue()
+    restauPair = {}     
     for r in restaurants:
 #pprint(r)
-#print r['id']
+        rid = str(r['id'])
         temp = ordrin_api.restaurant_details(str(r['id']))
 #pprint(temp)
         cuisines = temp['cuisine']
@@ -75,10 +129,9 @@ def order(food, location,city,zipcode):
         else:
             priority = 2         
          
-        restauPair = {}     
         #newRest = Eatery(temp['name'], priority)  
         foodList = [];
-        pprint(temp)
+        #pprint(temp)
         menuItems = (temp['menu'])[0]#go through ALL menu Items
        #pprint(menuItems)
         additionalfee = menuItems['additional_fee']
@@ -91,28 +144,27 @@ def order(food, location,city,zipcode):
             ID = child['id']
             name = child['name']
             price = child['price']
-            newFood = Food(addFeePerItem, descrip, ID, name, price)
+            newFood = Food(addFeePerItem, descrip, ID, name, price, rid)
             foodList.append(newFood)
-            print newFood.ID
+            #print newFood.ID
             #pprint (child)
         
-        restauPair[temp] = foodList
-        priority.put(priority, temp)
-
+        restauPair[temp['name']] = foodList
+        priorityQ.put(temp, priority)
         #restauPair[newRest] = foodList        
-    finalOrder(restauPair, priority, ordrin_api)   
+    finalOrder(restauPair, priorityQ, ordrin_api)   
     #IDENTIFY THE TOP RESTAURANT. NOW WE HAVE TO ASK THE USER WHAT THEY WANT.
        #get all of the stuff in priority of the food.
     
     
 
 def getFood(genre, location,city, zipcode):
-    b = list.index("rap")
-    print b
+    b = list.index(genre)
+    #print b
     k = value[b];
     
-    print k
-    k = 0
+    #print k
+    #k = 0
     food = None;
     if k == 0:
         food = "pizza"
@@ -145,8 +197,7 @@ def getFood(genre, location,city, zipcode):
    """
     order(food, location, city, zipcode)
     
-print "here"    
-getFood("rap", "10 7th Avenue", "New York City", "10001", "3.28")
+getFood("rap", "10 7th Avenue", "New York City", "10001")
 
     #set food according to genre
     #use yelp to find 
