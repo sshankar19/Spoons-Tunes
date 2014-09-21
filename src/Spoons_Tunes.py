@@ -1,4 +1,5 @@
 import Spotify
+import Food
 import sys
 
 
@@ -14,3 +15,7 @@ numSongs = int(sys.argv[8])
 assert numSongs < 100
 
 Spotify.make_playlist(username, playlistName, genre, city + "," + state, numSongs)
+#Food.getFood(genre, location, city, state, 3.28)
+
+
+
