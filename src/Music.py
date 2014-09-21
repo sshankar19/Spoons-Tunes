@@ -36,7 +36,7 @@ def getArtistsByLocation(location, appID="Spoons-Tunes", maxNum=1):
     """
     
     #TODO: assert location is a valid location
-    
+    location.replace(" ", "+")
             
     import urllib2
 
@@ -67,24 +67,32 @@ def genPlaylist(artistList):
     """
     Given list of artists, creates playlist radio
     """
-    
 
     pList = playlist.Playlist(type="artist-radio", artist=artistList)
     while True:
 
         yield pList.get_next_songs()
         
-listTest = getArtistsByGenre("rock") + getArtistsByLocation("New+York, NY")
-print listTest
-final = genPlaylist(listTest[:5])
-
-while True:
-    input = raw_input("Press enter for new song: ")
-    print next(final)
+def getPlayList(genre, location, numSongs=20):
+    """
+    Given genre and location, return list of songs
+    """
+    listTest = getArtistsByGenre(genre) + getArtistsByLocation(location)
+    final = genPlaylist(listTest[:5])
     
-
-
-
+    ctr = 0
+    songList = []
+    while ctr < numSongs:
+        try:
+            nextSong = next(final)
+        except:
+            return songList
+        songList.append(nextSong[0])
+        ctr+=1
+    return songList
+    
+#getPlayList("rock", "New+York,NY")
+    
 
 # 
 # #===============================================================================
