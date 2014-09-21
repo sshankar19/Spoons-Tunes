@@ -1,9 +1,17 @@
 import json
 import ordrin
 from pprint import pprint
-from yelpapi import YelpAPI
 from Queue import PriorityQueue, Queue
 
+class Eatery:
+    i = 0;
+    def __init__(self):
+        i = 0;
+
+class Food:
+    i = 0;
+    def __init__(self):
+        i = 0;
 
 json_data=open('genres2.json')
 
@@ -39,25 +47,35 @@ def order(food, location,city,zipcode, price):
         temp = ordrin_api.restaurant_details(str(r['id']))
 #pprint(temp)
         cuisines = temp['cuisine']
-        for
-        print type(cuisines)
-        print len(cuisines)
-        print cuisines[0]
-        if cuisines is food:
+        highpriority = False
+        j = 0
+        for j in range(len(cuisines)):
+#print cuisines[j]
+            if cuisines[j] is food:
+                highpriority = True;
+         
+        restauPair = {}       
+        pprint(temp)
+        menu = temp['menu']
+        menuItems = menu[0]
+       #pprint(menuItems)
+        additionalfee = menuItems['additional_fee']
+        children = menuItems['children'] 
+        #print(additionalfee)
+        #pprint(menu)
+        for child in children: #each individual plate of food
+            addFeePerItem = child['additional_fee']
+            descrip = child['descrip']
+            ID = child['id']
+            name = child['name']
+            price = child['price']
+            #pprint (child)
+                
+        if highpriority:
             priority.put(1, temp)
-            print temp
-        else:    
+        else:
             priority.put(2, temp)
             
-    restauPair = {}       
-       
-    print priority        
-    for t in priority:
-        for item in (t['menu'])['children']:
-            for children in item:
-                for food in children:
-                    print food['price']
-                    restauPair.update({t:food})
 
     top = priority.get_nowait()
     
