@@ -1,4 +1,8 @@
 #ask the user the event (location, city, zipcode)
+import Music
+import Spotify
+import pyechonest
+import spotipy
 
 print "Welcome to Spoons&Tunes"
 print "Spoons&Tunes helps to organize your event, by:"
@@ -10,13 +14,19 @@ location = raw_input("Please enter the address of your event:")
 print location
 city = raw_input("Now the city please:")
 print city
-zipcode = raw_input("Please enter the address of your event:")
-print location
-location = raw_input("Please enter the address of your event:")
-print location
-username = raw_input("Please enter the address of your event:")
-print location
-playlistName = raw_input("Please enter the address of your event:")
-print location
-numberSongs = raw_input("Please enter the address of your event:")
-print location
+state = raw_input("State of residence please!")
+print state
+zipcode = raw_input("Please enter the zipcode of your event:")
+print zipcode
+username = raw_input("Please enter the username for Spotify:")
+print username
+playlist = raw_input("Please enter the Playlist name for this event:")
+print playlist
+genre = raw_input("What type of music would you want for this event?")
+print genre
+numSongs = raw_input("How many songs do you want for this")
+print numSongs
+
+spotLoc = state+" , "+state
+Spotify.make_playlist(username, playlist, genre, spotLoc, numSongs)
+
