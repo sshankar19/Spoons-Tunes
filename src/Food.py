@@ -24,8 +24,8 @@ for d in genre_data:
 json_data.close()
  
 
-for e in list:
-    print e + "\n"    
+#for e in list:
+#   print e + "\n"    
 
 def order(food, location,city,zipcode, price):
     ordrin_api = ordrin.APIs('VP0cjZmpyVPNAFJUJkBWDIETChyTTwp7mX3jlPzfn4Q', ordrin.TEST)
@@ -34,16 +34,24 @@ def order(food, location,city,zipcode, price):
     priority = PriorityQueue()
     
     for r in restaurants:
-        temp = ordrin_api.restaurant_details(r[id])
-        cuisines = json.loads(temp)['cuisine']
+#pprint(r)
+#print r['id']
+        temp = ordrin_api.restaurant_details(str(r['id']))
+#pprint(temp)
+        cuisines = temp['cuisine']
+        for
+        print type(cuisines)
+        print len(cuisines)
+        print cuisines[0]
         if cuisines is food:
             priority.put(1, temp)
-        elif cuisines:    
+            print temp
+        else:    
             priority.put(2, temp)
-           
-    menu = []
-    restauPair = {}       
             
+    restauPair = {}       
+       
+    print priority        
     for t in priority:
         for item in (t['menu'])['children']:
             for children in item:
@@ -62,8 +70,12 @@ def order(food, location,city,zipcode, price):
     
 
 def getFood(genre, location,city, zipcode, price):
-    i = list.index(genre )
-    k = value[i]
+    b = list.index("rap")
+    print b
+    k = value[b];
+    
+    print k
+    k = 0
     food = None;
     if k == 0:
         food = "pizza"
@@ -72,7 +84,7 @@ def getFood(genre, location,city, zipcode, price):
     elif k == 2:
         food = "steak"
     elif k == 3:
-        food = "sushi"
+        food = "Chinese"
     elif k == 4:
         food = "salad"
     elif k== 5:
@@ -80,7 +92,7 @@ def getFood(genre, location,city, zipcode, price):
     elif k== 6:
         food = "Banh Mi"
     elif k ==7:
-        food = "asian"
+        food = "Japanese"
     elif k==8:
         food = "sandwiches"
     elif k==9:
