@@ -4,8 +4,9 @@ from pprint import pprint
 from Queue import PriorityQueue, Queue
 
 class Eatery:
-    def __init__(self, name):
+    def __init__(self, name, priority, ID):
         self.name = name;
+        self.priority = priority;
 
 class Food:
     def __init__(self, addFeePerItem, descrip, ID, name, price):
@@ -35,7 +36,19 @@ json_data.close()
  
 
 #for e in list:
-#   print e + "\n"    
+#   print e + "\n"  
+
+def suggestionMenu(restDict, restaurant, ordrin):
+    print "The restaurant suggested is: "+ restaurant['name']
+    print "Your choices are the following: "
+    list = restDict[restaurant]
+    for food 
+  
+
+def finalOrder(restDict, priority, ordrin):
+    suggestionMenu(restDict, top = priority.get_nowait(), ordrin)
+
+
 
 def order(food, location,city,zipcode):
     ordrin_api = ordrin.APIs('VP0cjZmpyVPNAFJUJkBWDIETChyTTwp7mX3jlPzfn4Q', ordrin.TEST)
@@ -55,9 +68,15 @@ def order(food, location,city,zipcode):
 #print cuisines[j]
             if cuisines[j] is food:
                 highpriority = True;
+        
+         
+        if highpriority:
+            priority = 1
+        else:
+            priority = 2         
          
         restauPair = {}     
-        newRest = Eatery(temp['name'])  
+        #newRest = Eatery(temp['name'], priority)  
         foodList = [];
         pprint(temp)
         menuItems = (temp['menu'])[0]#go through ALL menu Items
@@ -76,20 +95,14 @@ def order(food, location,city,zipcode):
             foodList.append(newFood)
             print newFood.ID
             #pprint (child)
-        restauPair[newRest] = foodList        
-        if highpriority:
-            priority.put(1, temp)
-        else:
-            priority.put(2, temp)
-            
+        
+        restauPair[temp] = foodList
+        priority.put(priority, temp)
 
-    top = priority.get_nowait()
-    
-    
+        #restauPair[newRest] = foodList        
+    finalOrder(restauPair, priority, ordrin_api)   
     #IDENTIFY THE TOP RESTAURANT. NOW WE HAVE TO ASK THE USER WHAT THEY WANT.
-    
-    
-    #get all of the stuff in priority of the food.
+       #get all of the stuff in priority of the food.
     
     
 
