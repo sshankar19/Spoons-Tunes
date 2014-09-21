@@ -32,6 +32,11 @@ def make_playlist(username, playlistName="Spoons&Tunes", genre="rock", location=
         #songIDs.append(id[14:])
         
     #print len(songIDs)
-   # print curlist['id']
+    
     
     spotify.user_playlist_add_tracks(username, curlist['id'], songIDs)
+    
+    return curlist['external_urls']['spotify']
+
+#print make_playlist("stellamplau", "test", "rock", "New+York,NY", 30)
+
