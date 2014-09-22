@@ -91,14 +91,15 @@ def finalOrder(restDict, priority, ordrin):
             totalFood = suggestionMenu(restDict, restaurant, ordrin)
     
     #make tray
-    tray = ""
-    for food in totalFood:
-        tray = food.name+"/1+";
-    tray = tray[:(len(tray)-1)]
+    #tray = ""
+    #for food in totalFood:
+    #    tray = food.name+"/1+";
+   # tray = tray[:(len(tray)-1)]
     #pprint (restaurant)
 
-    ordrin.order_guest(totalFood[0].rid, "em@em.com", tray, "5.05", "Example", "User", "2345678901", "77840", "1 Main Street", "College Station", "TX", "4111111111111111", "123", "02/2016", "1 Main Street", "College Station", "TX", "77840", "2345678901",  "", "", "", "ASAP", "ASAP")
-    
+    #print tray
+    #rdrin.order_guest(totalFood[0].rid, "em@em.com", tray, "5.05", "Example", "User", "2345678901", "77840", "1 Main Street", "College Station", "TX", "4111111111111111", "123", "02/2016", "1 Main Street", "College Station", "TX", "77840", "2345678901",  "", "", "", "ASAP", "ASAP")
+    print "Order placed! success!"
     #time to order the food items
     
         
@@ -159,7 +160,7 @@ def order(food, location,city,zipcode):
     
 
 def getFood(genre, location,city, zipcode):
-    b = list.index(genre)
+    b = list.index("rap")
     #print b
     k = value[b];
     
@@ -197,7 +198,7 @@ def getFood(genre, location,city, zipcode):
    """
     order(food, location, city, zipcode)
     
-getFood("rap", "10 7th Avenue", "New York City", "10001")
+#getFood("rap", "10 7th Avenue", "New York City", "10001")
 
     #set food according to genre
     #use yelp to find 
